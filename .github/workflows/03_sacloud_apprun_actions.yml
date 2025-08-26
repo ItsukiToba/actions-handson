@@ -1,9 +1,7 @@
 name: 03 Sacloud Apprun Actions
 
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -36,14 +34,3 @@ jobs:
         run: echo "DEPLOY_PUBLIC_URL=$(echo \"${{ steps.deploy.outputs.public-url }}\" | sed 's/\\//g')" >> $GITHUB_ENV
         env:
           PUBLIC_URL: ${{ steps.deploy.outputs.public-url }}
-
-      - name: デプロイ結果を通知
-        if: env.DEPLOY_PUBLIC_URL != ''
-        uses: ippanpeople/slack-notify-action@v0.0.5
-        with:
-          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          thread_ts: "1756085798.811349"
-          pretext: "03 Sacloud Apprun Actions ✅ <!channel>"
-          author_name: ":github_white: ${{ vars.AUTHOR_NAME }}"
-          repository: "${{ vars.REPOSITORY }}"
-          message: ":deploy: ${{ env.DEPLOY_PUBLIC_URL }}"
