@@ -21,4 +21,6 @@ func main() {
 
 	fmt.Println("Listening on port", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
+
+	fmt.Println("test")
 }
